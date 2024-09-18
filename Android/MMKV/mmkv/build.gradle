@@ -2,12 +2,15 @@ apply from: rootProject.file('gradle/build_library.gradle')
 
 android {
     namespace "com.tencent.mmkv"
-    defaultPublishConfig "DefaultCppRelease"
+    //defaultPublishConfig "DefaultCppRelease"
 //    defaultPublishConfig "StaticCppRelease"
 //    defaultPublishConfig "SharedCppRelease"
 
+    compileSdk 34
     defaultConfig {
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        minSdk 23
+        targetSdk 34
+
         externalNativeBuild {
             cmake {
                 // uncomment this line to support 32-bit ABIs (armeabi-v7a & x86)
@@ -15,9 +18,26 @@ android {
                 // abiFilters 'arm64-v8a', 'x86_64'
             }
         }
-        ndkVersion = '26.3.11579264'
-        minSdkVersion rootProject.ext.minSdkVersion
+        ndkVersion = '27.1.12297006'
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    //解决打包失败问题
+    lint {
+        baseline = file("lint-baseline.xml")
+        abortOnError false
+        checkReleaseBuilds false
+    }
+
+    buildFeatures{
+        aidl = true
+        buildConfig = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -34,17 +54,14 @@ android {
             jniDebuggable true
         }
     }
+
     externalNativeBuild {
         cmake {
             path "CMakeLists.txt"
             version "3.18.0+"
         }
     }
-    lintOptions {
-        tasks.lint.enabled = false
-    }
-
-    flavorDimensions "stl_mode"
+    flavorDimensions  = ["stl_mode"]
     productFlavors {
         DefaultCpp {
             dimension "stl_mode"
@@ -85,11 +102,7 @@ configurations {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.annotation:annotation:1.8.0'
-    javadocDeps 'androidx.annotation:annotation:1.8.0'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test:runner:1.6.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
-
+    implementation 'androidx.annotation:annotation:1.8.2'
+    //javadocDeps 'androidx.annotation:annotation:1.8.2'
     compileOnly project(':mmkvannotation')
 }

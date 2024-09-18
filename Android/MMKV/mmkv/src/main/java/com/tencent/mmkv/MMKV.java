@@ -45,6 +45,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import com.tencent.mmkv.BuildConfig;
+
 /**
  * An highly efficient, reliable, multi-process key-value storage framework.
  * THE PERFECT drop-in replacement for SharedPreferences and MultiProcessSharedPreferences.
