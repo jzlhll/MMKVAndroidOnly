@@ -22,6 +22,7 @@ Sync with MMKV 1.3.9.
 
 <img src=".\screenshot02.png" alt="screenshot02" style="zoom:80%;" />
 
+Window or Mac(arm) compiled successful.
 
 
 
@@ -43,8 +44,4 @@ Sync with MMKV 1.3.9.
 
 点击锤子进行编译即可。最后在mmkv模块下，build/outputs/aar/ 找到aar文件。
 
-
-
-
-
-todo : Window已经编译成功，没有试过mac。
+Window编译成功，arm版mac编译成功。
